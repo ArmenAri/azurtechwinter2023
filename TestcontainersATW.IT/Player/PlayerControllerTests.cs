@@ -43,6 +43,9 @@ public class PlayerControllerTests : IClassFixture<AzurTechWinterApiFactory>, IA
 
         result.Should().NotBeNull();
         result!.Name.Should().Be(transferObject.Name);
+
+        var saved = await _azurTechWinterContext.Players.Where(player => player.Name == transferObject.Name).SingleAsync();
+        saved.Should().BeEquivalentTo(result);
     }
 
     [Fact]
@@ -74,6 +77,18 @@ public class PlayerControllerTests : IClassFixture<AzurTechWinterApiFactory>, IA
 
         result.Should().NotBeNull();
         result!.MessageText.Should().Contain("duplicate key value violates unique constraint");
+
+        var saved = await _azurTechWinterContext.Players.ToListAsync();
+        saved.Should().HaveCount(1);
+
+        var single = saved.Single();
+        single.Should().BeEquivalentTo(new Entities.Player()
+        {
+            Id = single.Id,
+            Name = winter1.Name,
+            HealthPoints = winter1.HealthPoints,
+            Strength = winter1.Strength
+        });
     }
 
     public Task InitializeAsync() => Task.CompletedTask;

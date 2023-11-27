@@ -30,7 +30,7 @@ public class AzurTechWinterApiFactory :
     //     .WithImage("azurtechwinter")
     //     .WithImagePullPolicy(PullPolicy.Never)
     //     .WithPortBinding(3000, 80)
-    //     .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(80))
+    //     //.WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(80))
     //     .Build();
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
